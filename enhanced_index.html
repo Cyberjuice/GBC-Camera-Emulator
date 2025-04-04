@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GameBoy Color Camera Simulator</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+    
+    <!-- Enhanced styles with cross-browser compatibility -->
+    <link rel="stylesheet" href="enhanced_styles.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="enhanced_script.js" as="script">
+    
+    <!-- Meta tags for better SEO and sharing -->
+    <meta name="description" content="A GameBoy Color Camera Simulator that works across browsers and devices">
+    <meta name="theme-color" content="#a2c0cc">
+    
+    <!-- iOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+    <div class="gameboy-container">
+        <!-- GameBoy Header -->
+        <div class="gameboy-header">
+            <div class="nintendo-logo">Nintendo</div>
+            <div class="gameboy-logo">GAME BOY <span class="color-text">COLOR</span></div>
+        </div>
+        
+        <!-- GameBoy Screen Area -->
+        <div class="screen-container">
+            <div class="screen-border">
+                <div class="power-indicator">POWER</div>
+                <div id="gameScreen" class="game-screen">
+                    <video id="video" class="hidden" playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <div id="flash" class="flash-effect"></div>
+                    <div id="notification" class="notification"></div>
+                    <div id="instructions" class="instructions">
+                        <h3>GameBoy Camera Simulator</h3>
+                        <p>Press START to turn on the camera</p>
+                        <p>Use D-pad to change filters:</p>
+                        <ul>
+                            <li>↑ - GameBoy Filter</li>
+                            <li>→ - Black & White</li>
+                            <li>↓ - Pixelated</li>
+                            <li>← - Original</li>
+                        </ul>
+                        <p>A Button - Capture Photo</p>
+                        <p>B Button - Restart Camera</p>
+                        <p>SELECT - Show/Hide Instructions</p>
+                        <div id="errorMessage" class="error-message"></div>
+                    </div>
+                </div>
+                <div id="statusIndicator" class="status-indicator">Camera Off</div>
+            </div>
+        </div>
+        
+        <!-- GameBoy Controls -->
+        <div class="controls-container">
+            <!-- D-Pad -->
+            <div class="dpad-container">
+                <div class="dpad">
+                    <button class="dpad-button up" data-direction="up" aria-label="Up"></button>
+                    <button class="dpad-button right" data-direction="right" aria-label="Right"></button>
+                    <button class="dpad-button down" data-direction="down" aria-label="Down"></button>
+                    <button class="dpad-button left" data-direction="left" aria-label="Left"></button>
+                    <div class="dpad-center"></div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons (A, B) -->
+            <div class="action-buttons">
+                <button id="captureButton" class="action-button a-button" title="Capture Photo" aria-label="A Button - Capture Photo">A</button>
+                <button id="restartButton" class="action-button b-button" title="Restart Camera" aria-label="B Button - Restart Camera">B</button>
+            </div>
+            
+            <!-- Menu Buttons (Start, Select) -->
+            <div class="menu-buttons">
+                <button id="selectButton" class="menu-button" data-button="select" aria-label="Select Button">SELECT</button>
+                <button id="startButton" class="menu-button" data-button="start" aria-label="Start Button">START</button>
+            </div>
+        </div>
+        
+        <!-- Filter Selection (Hidden in UI, controlled by D-pad) -->
+        <div class="filter-controls">
+            <select id="filterSelect" class="hidden">
+                <option value="gameboy">GameBoy</option>
+                <option value="bw">Black & White</option>
+                <option value="pixelated">Pixelated</option>
+                <option value="original">Original</option>
+            </select>
+        </div>
+        
+        <!-- GameBoy Footer -->
+        <div class="gameboy-footer">
+            <div class="speaker-holes">
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+                <div class="speaker-hole"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="page-footer">
+        <p>GameBoy Color Camera Simulator - Compatible with Chrome, Firefox, Safari, and Edge</p>
+        <p id="deviceMessage">For best experience on mobile devices, please rotate to landscape mode</p>
+        <p id="browserCompatMessage"></p>
+    </footer>
+    
+    <!-- Browser compatibility check -->
+    <script>
+        // Simple browser detection for initial compatibility message
+        (function() {
+            const ua = navigator.userAgent;
+            const browserCompatMessage = document.getElementById('browserCompatMessage');
+            const deviceMessage = document.getElementById('deviceMessage');
+            
+            // Check if this is a mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            
+            // Update device message based on device type
+            if (isMobile) {
+                if (/iPad/i.test(ua)) {
+                    deviceMessage.textContent = 'iPad detected - Both portrait and landscape orientations supported';
+                } else {
+                    deviceMessage.textContent = 'Mobile device detected - For best experience, please rotate to landscape mode';
+                }
+            } else {
+                deviceMessage.textContent = 'Desktop device detected - Full compatibility enabled';
+            }
+            
+            // Check for critical browser features
+            let compatMessage = '';
+            
+            // Check for canvas support
+            if (!document.createElement('canvas').getContext) {
+                compatMessage += 'Warning: Your browser does not support canvas. ';
+            }
+            
+            // Check for MediaDevices API
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                // Check for legacy getUserMedia
+                if (navigator.getUserMedia || navigator.webkitGetUserMedia || 
+                    navigator.mozGetUserMedia || navigator.msGetUserMedia) {
+                    compatMessage += 'Notice: Using legacy camera API. ';
+                } else {
+                    compatMessage += 'Warning: Your browser may not support camera access. ';
+                }
+            }
+            
+            // Set compatibility message
+            if (compatMessage) {
+                browserCompatMessage.textContent = compatMessage;
+                browserCompatMessage.style.color = '#ff6600';
+            } else {
+                browserCompatMessage.textContent = 'Your browser is fully compatible with this application';
+                browserCompatMessage.style.color = '#009900';
+            }
+        })();
+    </script>
+    
+    <!-- Enhanced script with cross-browser compatibility -->
+    <script src="enhanced_script.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Fallback for browsers without JavaScript -->
+    <noscript>
+        <div style="color: red; text-align: center; padding: 20px;">
+            This application requires JavaScript to be enabled in your browser.
+        </div>
+    </noscript>
+</body>
+</html>

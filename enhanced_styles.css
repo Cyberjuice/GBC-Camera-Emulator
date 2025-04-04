@@ -1,0 +1,703 @@
+/**
+ * GameBoy Color Simulator - Enhanced Styles with Cross-Browser Compatibility
+ * This CSS extends the original styles with improved responsive design and browser support
+ */
+
+/* Base styles from original with cross-browser enhancements */
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* GameBoy Container */
+.gameboy-container {
+    width: 360px;
+    background-color: #a2c0cc;
+    border-radius: 15px 15px 60px 15px;
+    padding: 20px;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.2),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.1),
+        inset 0 5px 10px rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* GameBoy Header */
+.gameboy-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.nintendo-logo {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.gameboy-logo {
+    font-family: 'Arial Black', 'Arial Bold', 'Gadget', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.color-text {
+    background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+/* Screen Container */
+.screen-container {
+    margin-bottom: 20px;
+}
+
+.screen-border {
+    background-color: #444;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+}
+
+.power-indicator {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    color: #777;
+}
+
+.game-screen {
+    width: 320px;
+    height: 288px;
+    background-color: #9bbc0f;
+    position: relative;
+    overflow: hidden;
+}
+
+.status-indicator {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+/* Video and Canvas */
+#video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Flash Effect */
+.flash-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+}
+
+.flash-effect.active {
+    opacity: 1;
+    animation: flash 0.5s ease-out;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Notification */
+.notification {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    text-align: center;
+    max-width: 80%;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+/* Instructions */
+.instructions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #9bbc0f;
+    color: #0f380f;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-size: 14px;
+}
+
+.instructions h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.instructions ul {
+    padding-left: 20px;
+}
+
+.error-message {
+    color: #ff0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff0000;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.error-message.critical {
+    font-weight: bold;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+/* Controls Container */
+.controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* D-Pad */
+.dpad-container {
+    width: 120px;
+}
+
+.dpad {
+    width: 120px;
+    height: 120px;
+    position: relative;
+}
+
+.dpad-button {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    position: absolute;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.dpad-button:active, .dpad-button.active {
+    background-color: #555;
+    transform: scale(0.95);
+}
+
+.dpad-button.up {
+    top: 0;
+    left: 40px;
+    border-radius: 5px 5px 0 0;
+}
+
+.dpad-button.right {
+    top: 40px;
+    left: 80px;
+    border-radius: 0 5px 5px 0;
+}
+
+.dpad-button.down {
+    top: 80px;
+    left: 40px;
+    border-radius: 0 0 5px 5px;
+}
+
+.dpad-button.left {
+    top: 40px;
+    left: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.dpad-center {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.action-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.action-button:active, .action-button.active {
+    transform: scale(0.95);
+}
+
+.a-button {
+    background-color: #e74c3c;
+}
+
+.b-button {
+    background-color: #3498db;
+}
+
+/* Menu Buttons */
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.menu-button {
+    padding: 5px 15px;
+    margin: 0 10px;
+    background-color: #777;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    transform: rotate(-25deg);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.menu-button:active, .menu-button.active {
+    background-color: #999;
+    transform: rotate(-25deg) scale(0.95);
+}
+
+/* GameBoy Footer */
+.gameboy-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.speaker-holes {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80px;
+    justify-content: space-between;
+}
+
+.speaker-hole {
+    width: 10px;
+    height: 10px;
+    background-color: #444;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+/* Page Footer */
+.page-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+}
+
+/* Performance Control */
+.performance-control {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 12px;
+    color: #555;
+}
+
+.performance-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.performance-label input {
+    margin-right: 5px;
+}
+
+/* Orientation Warning */
+.orientation-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.orientation-content {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.rotate-icon {
+    font-size: 50px;
+    animation: rotate 2s infinite linear;
+    margin-bottom: 20px;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Browser info */
+.browser-info {
+    font-size: 10px;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Enhanced Cross-Browser Compatibility */
+
+/* Flexbox prefixes for older browsers */
+.controls-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+/* Animation prefixes */
+@-webkit-keyframes flash {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@-moz-keyframes flash {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@-o-keyframes flash {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Transition prefixes */
+.gameboy-container {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+/* Enhanced Responsive Design */
+
+/* Landscape mode for mobile devices */
+.gameboy-container.landscape-mode {
+    width: calc(100vw - 40px);
+    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.landscape-mode .screen-container {
+    width: 60%;
+    margin-right: 5%;
+}
+
+.landscape-mode .controls-container {
+    width: 35%;
+    flex-direction: column;
+}
+
+/* Portrait mode for mobile devices */
+.gameboy-container.portrait-mode {
+    width: 100%;
+    max-width: 400px;
+}
+
+.portrait-mode .game-screen {
+    height: 240px;
+}
+
+.portrait-mode .dpad {
+    width: 100px;
+    height: 100px;
+}
+
+.portrait-mode .dpad-button {
+    width: 33px;
+    height: 33px;
+}
+
+.portrait-mode .dpad-button.up {
+    left: 33px;
+}
+
+.portrait-mode .dpad-button.right {
+    left: 66px;
+}
+
+.portrait-mode .dpad-button.down {
+    left: 33px;
+    top: 66px;
+}
+
+.portrait-mode .dpad-center {
+    width: 33px;
+    height: 33px;
+    top: 33px;
+    left: 33px;
+}
+
+.portrait-mode .action-button {
+    width: 40px;
+    height: 40px;
+}
+
+/* iPad specific adjustments */
+.gameboy-container.ipad-device {
+    max-width: 700px;
+}
+
+.ipad-device .game-screen {
+    height: 320px;
+}
+
+.ipad-device.landscape-mode .screen-container {
+    width: 65%;
+}
+
+.ipad-device.landscape-mode .controls-container {
+    width: 30%;
+}
+
+/* Media Queries for Responsive Design */
+
+/* Small screens (phones) */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .gameboy-container {
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px 10px 40px 10px;
+    }
+    
+    .game-screen {
+        width: 100%;
+        height: 240px;
+    }
+    
+    .dpad {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .dpad-button {
+        width: 33px;
+        height: 33px;
+    }
+    
+    .dpad-button.up {
+        left: 33px;
+    }
+    
+    .dpad-button.right {
+        left: 66px;
+    }
+    
+    .dpad-button.down {
+        left: 33px;
+        top: 66px;
+    }
+    
+    .dpad-center {
+        width: 33px;
+        height: 33px;
+        top: 33px;
+        left: 33px;
+    }
+    
+    .action-button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .menu-button {
+        padding: 4px 12px;
+        font-size: 10px;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .gameboy-container {
+        width: 90%;
+        max-width: 500px;
+    }
+    
+    .game-screen {
+        height: 270px;
+    }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 769px) {
+    .gameboy-container {
+        width: 360px;
+    }
+    
+    .game-screen {
+        height: 288px;
+    }
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+    .gameboy-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 90%;
+        max-width: 700px;
+    }
+    
+    .gameboy-header {
+        width: 100%;
+    }
+    
+    .screen-container {
+        width: 60%;
+        margin-right: 5%;
+        margin-bottom: 0;
+    }
+    
+    .controls-container {
+        width: 35%;
+        flex-direction: column;
+    }
+    
+    .gameboy-footer {
+        width: 100%;
+    }
+}
+
+/* High-DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .gameboy-container {
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            inset 0 -5px 15px rgba(0, 0, 0, 0.08),
+            inset 0 5px 15px rgba(255, 255, 255, 0.4);
+    }
+}
+
+/* Print styles */
+@media print {
+    .gameboy-container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .page-footer {
+        display: none;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .flash-effect,
+    .notification,
+    .gameboy-container,
+    .dpad-button,
+    .action-button,
+    .menu-button {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .rotate-icon {
+        animation: none !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+    }
+    
+    .page-footer {
+        color: #aaa;
+    }
+}

@@ -1,0 +1,16 @@
+-rw-r--r-- 1 user user  4211 Apr  4 20:43 README.md
+-rw-r--r-- 1 user user  5145 Apr  4 20:39 index.html
+-rw-r--r-- 1 user user 15867 Apr  4 20:43 script.js
+-rw-r--r-- 1 user user  9048 Apr  4 20:41 styles.css
+
+screenshots/:
+total 168
+drwxr-xr-x 2 root root  4096 Apr  4 20:39 .
+drwxrwxrwx 4 user user  4096 Apr  4 20:44 ..
+-rw-r--r-- 1 root root  3104 Apr  4 20:39 bw_mode.png
+-rw-r--r-- 1 root root 76487 Apr  4 20:39 combined_screenshots.png
+-rw-r--r-- 1 root root  7800 Apr  4 20:39 interface.png
+-rw-r--r-- 1 root root 48030 Apr  4 20:39 mobile_screenshot.png
+-rw-r--r-- 1 root root 13341 Apr  4 20:39 mobile_view.png
+-rw-r--r-- 1 root root  2807 Apr  4 20:39 normal_mode.png
+-rw-r--r-- 1 root root  3355 Apr  4 20:39 pixelated_mode.png

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameBoy Color Camera Simulator - Experience the nostalgic feel of the GameBoy Camera with modern web technology">
+    <meta name="theme-color" content="#8bac0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>GameBoy Color Camera Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GameBoy Color Camera Simulator</h1>
+            <p class="subtitle">Experience the nostalgic feel of the GameBoy Camera</p>
+        </header>
+
+        <main>
+            <div class="gameboy">
+                <div class="gameboy-header">
+                    <div class="power-indicator"></div>
+                    <div class="logo">GAME BOY <span class="color-text">COLOR</span></div>
+                </div>
+                
+                <div class="screen-container">
+                    <div class="screen">
+                        <!-- Video element for webcam feed -->
+                        <video id="video" autoplay playsinline></video>
+                        <!-- Canvas for applying filters -->
+                        <canvas id="canvas"></canvas>
+                        <!-- Flash effect -->
+                        <div id="flash"></div>
+                        <!-- Error message area -->
+                        <div id="error-message" class="hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="d-pad">
+                        <div class="d-pad-up" data-key="ArrowUp"></div>
+                        <div class="d-pad-right" data-key="ArrowRight"></div>
+                        <div class="d-pad-down" data-key="ArrowDown"></div>
+                        <div class="d-pad-left" data-key="ArrowLeft"></div>
+                        <div class="d-pad-center"></div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <div class="btn-b" data-key="b" title="Change Filter">B</div>
+                        <div class="btn-a" data-key="a" title="Take Photo">A</div>
+                    </div>
+                </div>
+                
+                <div class="menu-buttons">
+                    <div class="btn-select" data-key="Shift" title="Help">SELECT</div>
+                    <div class="btn-start" data-key="Enter" title="Download Photo">START</div>
+                </div>
+                
+                <div class="speaker-holes">
+                    <div class="hole"></div>
+                    <div class="hole"></div>
+                    <div class="hole"></div>
+                    <div class="hole"></div>
+                    <div class="hole"></div>
+                    <div class="hole"></div>
+                </div>
+            </div>
+            
+            <div id="instructions" class="hidden">
+                <div class="instructions-content">
+                    <h2>How to Use</h2>
+                    <ul>
+                        <li><strong>A Button:</strong> Take a photo</li>
+                        <li><strong>B Button:</strong> Change filter</li>
+                        <li><strong>START:</strong> Download current photo</li>
+                        <li><strong>SELECT:</strong> Show/hide this help</li>
+                        <li><strong>D-Pad:</strong> Navigate UI</li>
+                    </ul>
+                    <h3>Keyboard Controls</h3>
+                    <ul>
+                        <li><strong>A key:</strong> Take photo</li>
+                        <li><strong>B key:</strong> Change filter</li>
+                        <li><strong>Enter:</strong> Download photo</li>
+                        <li><strong>Shift:</strong> Show/hide help</li>
+                        <li><strong>Arrow keys:</strong> Navigate</li>
+                    </ul>
+                    <button id="close-instructions">Close</button>
+                </div>
+            </div>
+            
+            <div class="filter-info">
+                <span id="current-filter">GameBoy</span>
+            </div>
+            
+            <div class="action-panel">
+                <button id="take-photo">Take Photo</button>
+                <button id="change-filter">Change Filter</button>
+                <button id="download-photo" disabled>Download</button>
+                <button id="help-button">Help</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>GameBoy Color Camera Simulator &copy; 2025</p>
+            <p class="compatibility-info">Best viewed in Chrome, Firefox, Safari, or Edge</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

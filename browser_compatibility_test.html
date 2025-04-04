@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameBoy Color Simulator - Browser Compatibility Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .test-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .test-button:hover {
+            background-color: #45a049;
+        }
+        
+        .result-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .result-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+        }
+        
+        .result-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .status-good {
+            color: green;
+        }
+        
+        .status-warning {
+            color: orange;
+        }
+        
+        .status-bad {
+            color: red;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .feature-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-supported::before {
+            content: "✓ ";
+            color: green;
+        }
+        
+        .feature-unsupported::before {
+            content: "✗ ";
+            color: red;
+        }
+        
+        .issue-list {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .performance-meter {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .performance-value {
+            height: 100%;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .test-section {
+                padding: 10px;
+            }
+        }
+        
+        #copyButton {
+            background-color: #2196F3;
+            margin-left: 10px;
+        }
+        
+        #copyButton:hover {
+            background-color: #0b7dda;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #jsonOutput {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GameBoy Color Simulator - Browser Compatibility Test</h1>
+    
+    <div class="test-section">
+        <h2>Browser Compatibility Testing</h2>
+        <p>This tool tests your browser's compatibility with the features required by the GameBoy Color Simulator.</p>
+        <p>Click the button below to run the compatibility test:</p>
+        <button id="runTestButton" class="test-button">Run Compatibility Test</button>
+        <div id="testProgress" class="hidden">
+            <p>Testing in progress...</p>
+        </div>
+    </div>
+    
+    <div id="resultSection" class="result-section">
+        <h2>Test Results</h2>
+        
+        <div class="result-card">
+            <div class="result-header">Browser Information</div>
+            <div id="browserInfo"></div>
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">Compatibility Summary</div>
+            <div id="compatSummary"></div>
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">Feature Support</div>
+            <ul id="featureList" class="feature-list"></ul>
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">Performance</div>
+            <div id="performanceResults"></div>
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">Issues Detected</div>
+            <div id="issuesList"></div>
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">Test Report 
+                <button id="copyButton" class="test-button">Copy Report</button>
+            </div>
+            <textarea id="jsonOutput" readonly></textarea>
+        </div>
+    </div>
+    
+    <script src="browser_compatibility_test.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const runTestButton = document.getElementById('runTestButton');
+            const testProgress = document.getElementById('testProgress');
+            const resultSection = document.getElementById('resultSection');
+            const browserInfo = document.getElementById('browserInfo');
+            const compatSummary = document.getElementById('compatSummary');
+            const featureList = document.getElementById('featureList');
+            const performanceResults = document.getElementById('performanceResults');
+            const issuesList = document.getElementById('issuesList');
+            const jsonOutput = document.getElementById('jsonOutput');
+            const copyButton = document.getElementById('copyButton');
+            
+            runTestButton.addEventListener('click', async function() {
+                // Show progress indicator
+                testProgress.classList.remove('hidden');
+                runTestButton.disabled = true;
+                
+                // Run the compatibility test
+                const report = await window.runGameBoyCompatibilityTest();
+                
+                // Hide progress indicator
+                testProgress.classList.add('hidden');
+                runTestButton.disabled = false;
+                
+                // Show results section
+                resultSection.style.display = 'block';
+                
+                // Populate browser info
+                browserInfo.innerHTML = `
+                    <p><strong>Browser:</strong> ${report.browser.name} ${report.browser.version}</p>
+                    <p><strong>Platform:</strong> ${report.browser.platform}</p>
+                    <p><strong>Device Type:</strong> ${report.summary.deviceType}</p>
+                `;
+                
+                // Populate compatibility summary
+                let summaryClass = 'status-good';
+                if (report.summary.supportLevel === 'Partial Support') {
+                    summaryClass = 'status-warning';
+                } else if (report.summary.supportLevel === 'Limited Support') {
+                    summaryClass = 'status-bad';
+                }
+                
+                compatSummary.innerHTML = `
+                    <p><strong>Support Level:</strong> <span class="${summaryClass}">${report.summary.supportLevel}</span></p>
+                    <p><strong>Critical Issues:</strong> ${report.summary.criticalIssues}</p>
+                    <p><strong>Performance Rating:</strong> ${report.summary.performance}</p>
+                `;
+                
+                // Populate feature list
+                featureList.innerHTML = '';
+                for (const [feature, supported] of Object.entries(report.features)) {
+                    const featureItem = document.createElement('li');
+                    featureItem.className = `feature-item ${supported ? 'feature-supported' : 'feature-unsupported'}`;
+                    
+                    // Format feature name for display
+                    const featureName = feature
+                        .replace(/([A-Z])/g, ' $1')
+                        .replace(/^./, str => str.toUpperCase());
+                    
+                    featureItem.textContent = featureName;
+                    featureList.appendChild(featureItem);
+                }
+                
+                // Populate performance results
+                const fpsPercentage = Math.min(100, (report.performance.canvasRenderingSpeed / 60) * 100);
+                performanceResults.innerHTML = `
+                    <p><strong>Canvas Rendering Speed:</strong> ${report.performance.canvasRenderingSpeed} FPS</p>
+                    <div class="performance-meter">
+                        <div class="performance-value" style="width: ${fpsPercentage}%">${report.performance.canvasRenderingSpeed} FPS</div>
+                    </div>
+                    <p><strong>Filter Processing Time:</strong> ${report.performance.filterProcessingTime} ms</p>
+                `;
+                
+                // Populate issues list
+                if (report.issues.length > 0) {
+                    let issuesHtml = '<ul class="issue-list">';
+                    report.issues.forEach(issue => {
+                        issuesHtml += `<li>${issue}</li>`;
+                    });
+                    issuesHtml += '</ul>';
+                    issuesList.innerHTML = issuesHtml;
+                } else {
+                    issuesList.innerHTML = '<p>No issues detected. All features are fully supported.</p>';
+                }
+                
+                // Populate JSON output
+                jsonOutput.value = JSON.stringify(report, null, 2);
+            });
+            
+            // Copy report to clipboard
+            copyButton.addEventListener('click', function() {
+                jsonOutput.select();
+                document.execCommand('copy');
+                alert('Report copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>
